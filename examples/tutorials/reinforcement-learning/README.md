@@ -12,3 +12,5 @@ python sb3_ppo_liftcube_rgbd.py --eval --model-path=path/to/model
 ````
 
 Pass in `--help` for more options (e.g. logging, number of parallel environmnets, whether to use ManiSkill2 Vectorized Environments or not etc.)
+
+For Stable Baselines 3, you need to install `stable_baselines3` as well as `tensorboard`.
