@@ -107,7 +107,7 @@ def parse_args():
     parser.add_argument(
         "--total-timesteps",
         type=int,
-        default=1_000_000,
+        default=450_000,
         help="Total timesteps for training",
     )
     parser.add_argument(
@@ -178,6 +178,8 @@ def main():
         "gamma": 0.85,
         "lambda_": 0.95,
         "clip_param": 0.2,
+        "vf_clip_param": 200,
+        "lr": 3e-4,
         "model": {
             "fcnet_hiddens": [256, 256],
             "fcnet_activation": "relu",
