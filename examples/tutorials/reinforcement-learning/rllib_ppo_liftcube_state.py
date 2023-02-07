@@ -1,18 +1,6 @@
-"""
-Example showing how to wrap the iGibson class using ray for rllib.
-Multiple environments are only supported on Linux. If issues arise, please ensure torch/numpy
-are installed *without* MKL support.
-
-This example requires ray to be installed with rllib support, and pytorch to be installed:
-    `pip install torch "ray[rllib]"`
-
-Note: rllib only supports a single observation modality:
-"""
 import argparse
 import logging
-import os.path as osp
-from sys import platform
-
+import numpy as np
 import gym
 import ray
 import ray.rllib.algorithms.ppo as ppo
@@ -149,7 +137,7 @@ def main():
             "control_mode": control_mode,
             "record_dir": None,
         },
-        "evaluation_interval": 16000,
+        "evaluation_interval": 20,
         "evaluation_duration": 5,
         "evaluation_config": {
             "env_config": {
@@ -206,17 +194,21 @@ def main():
             verbose=2,
             name=args.exp_name,
             local_dir=args.log_dir,
-            checkpoint_freq=16,
+            checkpoint_freq=20,
             checkpoint_at_end=True,
             stop=stop,
         )
         # get latest checkpoint
-        latest_checkpoint = results.get_best_checkpoint(results.trials[0], mode="max")
+        latest_checkpoint = results.get_best_checkpoint(results.trials[0], mode="max", return_path=True)
         algo = ppo.PPO(config=config)
         algo.load_checkpoint(latest_checkpoint)
+        
     results = algo.evaluate()
     print(results)
-
+    ep_lens = results["evaluation"]["hist_stats"]["episode_lengths"]
+    success = np.array(ep_lens) < 200
+    success_rate = success.mean()
+    print("Success Rate:", success_rate)
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

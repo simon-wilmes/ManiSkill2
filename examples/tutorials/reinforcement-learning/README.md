@@ -1,14 +1,15 @@
 # Reinforcement Learning with ManiSkill2
 
-This contains single-file implementations that solve with LiftCube environment with rgbd or state observations. All scripts contain mostly the same arguments, see the following sections on how to run the scripts for each supported RL library
+This contains single-file implementations that solve with LiftCube environment with rgbd or state observations. All scripts use mostly the same arguments, see the following sections on how to run the scripts for each RL library we have examples for
 
-Currently supported:
+Currently provided examples:
 
 - [Stable Baselines 3](#stable-baselines-3)
 - [RLlib](#rllib)
 
 ## Stable Baselines 3
 
+There are two scripts, sb3_ppo_liftcube_rgbd.py which trains using RGBD observations and sb3_ppo_liftcube_state.py which trains using state observations.
 
 ```
 # Training
@@ -23,6 +24,9 @@ Pass in `--help` for more options (e.g. logging, number of parallel environmnets
 For Stable Baselines 3, you need to install `stable_baselines3` as well as `tensorboard`.
 
 ## RLlib
+
+There are two scripts, rllib_ppo_liftcube_rgbd.py which trains using RGBD observations and rllib_ppo_liftcube_state.py which trains using state observations.
+
 
 ```
 # Training
